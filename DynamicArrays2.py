@@ -1,3 +1,4 @@
+import sys
 import time
 
 # Opening and reading the file
@@ -36,7 +37,7 @@ def binarysearch_insert(arr, word2):
 
 
 # Insert element into the array and calculate the time at search and increase point
-def insert_calculatetime(eowl, word1, fibseq1, fib_sequence, increment10, incrementdouble):
+def insert_calculatetime(eowl, word1, fibseq1, fib_sequence, increment10, incrementdouble, timetaken, memorytaken):
     if eowl.count(None) == 0:
         start = time.perf_counter()
         if fib_sequence:
@@ -50,12 +51,15 @@ def insert_calculatetime(eowl, word1, fibseq1, fib_sequence, increment10, increm
         eowl.pop()
         end = time.perf_counter()
         time_elapsed = end - start
+        timetaken.append(time_elapsed)
+        memory_used = sys.getsizeof(eowl)
+        memorytaken.append(memory_used)
         print(f"{len(eowl)} 🡪 {time_elapsed:.8f} seconds")
 
     position = binarysearch_insert(eowl, word1)
     eowl.insert(position, word1)
     eowl.pop()
-    return eowl
+    return eowl, timetaken, memorytaken
 
 
 def printing(eowl):
@@ -73,17 +77,26 @@ if __name__ == "__main__":
     eowl_double = [None] * 2
     eowl_fib = [None] * 2
     fib_seq = [1, 1]
+    time_taken = []
+    memory_taken = []
     # Enter Input strategy type: A or B or C
     strategy = input("Enter Strategy type:")
     if strategy == 'A':
         for word in words:
-            eowl_10 = insert_calculatetime(eowl_10, word, fib_seq, False, True, False)
+            eowl_10, time_taken, memory_taken = insert_calculatetime(eowl_10, word, fib_seq, False, True, False, time_taken, memory_taken)
         printing(eowl_10)
+        print("Time Array:", time_taken)
+        print("Space Array:", memory_taken)
+
     elif strategy == 'B':
         for word in words:
-            eowl_double = insert_calculatetime(eowl_double, word, fib_seq, False, False, True)
+            eowl_double, time_taken, memory_taken = insert_calculatetime(eowl_double, word, fib_seq, False, False, True, time_taken, memory_taken)
         printing(eowl_double)
+        print("Time Array:", time_taken)
+        print("Space Array:", memory_taken)
     elif strategy == 'C':
         for word in words:
-            eowl_fib = insert_calculatetime(eowl_fib, word, fib_seq, True, False, False)
+            eowl_fib, time_taken, memory_taken = insert_calculatetime(eowl_fib, word, fib_seq, True, False, False, time_taken, memory_taken)
         printing(eowl_fib)
+        print("Time Array:", time_taken)
+        print("Space Array:", memory_taken)
