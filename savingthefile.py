@@ -1,4 +1,3 @@
-import sys
 import time
 import json
 
@@ -68,7 +67,7 @@ def save_data_to_file(strategy, time_taken, array_sizes):
         "time_taken": time_taken,
         "array_sizes": array_sizes
     }
-    with open(f'{strategy}_data.json', 'w') as f:
+    with open(f'E:/Python_Workbase/College/CS5115/assg1/Dynamic_Arrays/data_log/{strategy}_data.json', 'w') as f:
         json.dump(data, f)
 
 
