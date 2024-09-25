@@ -48,3 +48,8 @@ So the array grows in the order of Fibonacci numbers so it is still linear order
 So the time complexity is O(n log n)<br />
 **Time Complexity: O(n log n)**<br />
 “The input size in this case depends on the number of elements in the text file given.”
+
+## Empirical Analysis
+![Figure_1](https://github.com/user-attachments/assets/1be7c099-f86f-40aa-8f7d-10f76806151e)
+Figure shows the data collected from the code by using the EOWL data set containing 270,000 words
+
