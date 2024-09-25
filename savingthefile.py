@@ -1,8 +1,9 @@
 import sys
 import time
+import json
 
 # Opening and reading the file
-with open('E:/Python_Workbase/College/CS5115/assg1/english-words/words.txt') as f:
+with open('E:/Python_Workbase/College/CS5115/assg1/english-words/words5.txt') as f:
     words = f.read().splitlines()
 
 
@@ -37,7 +38,7 @@ def binarysearch_insert(arr, word2):
 
 
 # Insert element into the array and calculate the time at search and increase point
-def insert_calculatetime(eowl, word1, fibseq1, fib_sequence, increment10, incrementdouble, timetaken, memorytaken):
+def insert_calculatetime(eowl, word1, fibseq1, fib_sequence, increment10, incrementdouble, timetaken, arraysizes):
     if eowl.count(None) == 0:
         start = time.perf_counter()
         if fib_sequence:
@@ -52,14 +53,23 @@ def insert_calculatetime(eowl, word1, fibseq1, fib_sequence, increment10, increm
         end = time.perf_counter()
         time_elapsed = end - start
         timetaken.append(time_elapsed)
-        memory_used = sys.getsizeof(eowl)
-        memorytaken.append(memory_used)
+        arraysizes.append(len(eowl))
         print(f"{len(eowl)} 🡪 {time_elapsed:.8f} seconds")
 
     position = binarysearch_insert(eowl, word1)
     eowl.insert(position, word1)
     eowl.pop()
-    return eowl, timetaken, memorytaken
+    return eowl, timetaken, arraysizes
+
+
+def save_data_to_file(strategy, time_taken, array_sizes):
+    data = {
+        "strategy": strategy,
+        "time_taken": time_taken,
+        "array_sizes": array_sizes
+    }
+    with open(f'{strategy}_data.json', 'w') as f:
+        json.dump(data, f)
 
 
 # We are printing the 1st, n/4, n/2, 3n/4, nth elements of eowl array
@@ -80,25 +90,21 @@ if __name__ == "__main__":
     eowl_fib = [None] * 2
     fib_seq = [1, 1]
     time_taken = []
-    memory_taken = []
-    # Enter Input strategy type: A or B or C
+    array_sizes = []
+
     strategy = input("Enter Strategy type:")
     if strategy == 'A':
         for word in words:
-            eowl_10, time_taken, memory_taken = insert_calculatetime(eowl_10, word, fib_seq, False, True, False, time_taken, memory_taken)
+            eowl_10, time_taken, array_sizes = insert_calculatetime(eowl_10, word, fib_seq, False, True, False, time_taken, array_sizes)
         printing(eowl_10)
-        print("Time Array:", time_taken)
-        print("Space Array:", memory_taken)
-
+        save_data_to_file('A', time_taken, array_sizes)
     elif strategy == 'B':
         for word in words:
-            eowl_double, time_taken, memory_taken = insert_calculatetime(eowl_double, word, fib_seq, False, False, True, time_taken, memory_taken)
+            eowl_double, time_taken, array_sizes = insert_calculatetime(eowl_double, word, fib_seq, False, False, True, time_taken, array_sizes)
         printing(eowl_double)
-        print("Time Array:", time_taken)
-        print("Space Array:", memory_taken)
+        save_data_to_file('B', time_taken, array_sizes)
     elif strategy == 'C':
         for word in words:
-            eowl_fib, time_taken, memory_taken = insert_calculatetime(eowl_fib, word, fib_seq, True, False, False, time_taken, memory_taken)
+            eowl_fib, time_taken, array_sizes = insert_calculatetime(eowl_fib, word, fib_seq, True, False, False, time_taken, array_sizes)
         printing(eowl_fib)
-        print("Time Array:", time_taken)
-        print("Space Array:", memory_taken)
+        save_data_to_file('C', time_taken, array_sizes)
