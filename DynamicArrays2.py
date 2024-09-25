@@ -2,7 +2,7 @@ import sys
 import time
 
 # Opening and reading the file
-with open('E:/Python_Workbase/College/CS5115/assg1/english-words/words3.txt') as f:
+with open('E:/Python_Workbase/College/CS5115/assg1/english-words/words4.txt') as f:
     words = f.read().splitlines()
 
 
@@ -62,6 +62,7 @@ def insert_calculatetime(eowl, word1, fibseq1, fib_sequence, increment10, increm
     return eowl, timetaken, memorytaken
 
 
+# We are printing the 1st, n/4, n/2, 3n/4, nth elements of eowl array
 def printing(eowl):
     word1 = eowl[0]
     word2 = eowl[len(eowl)//4]
@@ -72,6 +73,7 @@ def printing(eowl):
 
 
 # Main function
+# Now we can choose the strategy we want to proceed with and print the output of the necessary
 if __name__ == "__main__":
     eowl_10 = [None] * 2
     eowl_double = [None] * 2
